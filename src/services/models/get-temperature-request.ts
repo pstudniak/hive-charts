@@ -1,8 +1,8 @@
 import { Temperature } from './temperature';
 
 export interface GetTemperatureRequest {
-    from: string;
-    to: string;
+    dateFrom: string;
+    dateTo: string;
 }
 
 export interface GetTemperatureResponse {

@@ -6,8 +6,8 @@ import { Temperature } from '../../services/models/temperature';
 
 export class Dashboard extends React.Component<{}, DashboardState> {
     private defaultDatesRange: GetTemperatureRequest = {
-        from: '10',
-        to: '12'
+        dateFrom: '2019-07-01',
+        dateTo: '2019-07-03',
     }
 
     public state: DashboardState = {
