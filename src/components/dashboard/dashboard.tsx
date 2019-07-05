@@ -1,24 +1,42 @@
 import React from 'react';
-import { getTemperature } from '../services/temperature.service';
-import { GetTemperatureResponse } from '../services/models/get-temperature-request';
+import { getTemperature } from '../../services/temperature.service';
+import { GetTemperatureRequest, GetTemperatureResponse } from '../../services/models/get-temperature-request';
+import { DashboardState } from './models/dashboard-state';
+import { Temperature } from '../../services/models/temperature';
 
-export class Dashboard extends React.Component<null, > {
-    public state: FaqListItemState = {
+export class Dashboard extends React.Component<{}, DashboardState> {
+    private defaultDatesRange: GetTemperatureRequest = {
+        from: '10',
+        to: '12'
+    }
+
+    public state: DashboardState = {
         temperatures: []
     };
 
     public componentDidMount(): void {
-        getTemperature({from: '10', to: '12'})
+        getTemperature(this.defaultDatesRange)
             .then((response: GetTemperatureResponse) => {
-
+                this.setState(response);
             });
     }
 
     public render() {
         return (
-            <p>
-
-            </p>
+            <div>
+                {this.renderTemperatures()}
+            </div>
         )
+    }
+
+    private renderTemperatures = () => {
+        return this.state.temperatures.map((temperature: Temperature, index: number) => {
+            return (<p key={`${index}${temperature.date}`}>
+                {
+                    `date: ${temperature.date}
+                    temperature: ${temperature.temperature}`
+                }
+            </p>);
+        })
     }
 }
